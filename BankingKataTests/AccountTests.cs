@@ -12,7 +12,7 @@ namespace BankingKataTests
     public class AccountTests
     {
         [Fact]
-        public void Any_Amount_Of_Money_Produces_A_Receipt()
+        public void Any_Amount_Of_Money_Produces_A_Transaction()
         {
             var account = new Account();
 
@@ -37,7 +37,6 @@ namespace BankingKataTests
 
             Prop.ForAll(x).QuickCheckThrowOnFailure();
         }
- 
 
         public class Money
         {
