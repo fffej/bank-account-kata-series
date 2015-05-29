@@ -4,30 +4,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using FsCheck;
+using FsCheck.Xunit;
 
 namespace BankingKataTests
 {
     public class AccountTests
     {
         [Fact]
-        public void Accounts_Can_Make_Deposits()
+        public void Any_Amount_Of_Money_Produces_A_Receipt()
         {
             var account = new Account();
-            var receipt = account.Deposit(Money.Pound);
 
-            Assert.NotNull(receipt);
+            Func<int,bool> x = (value) => account.Deposit(new Money(value)) != null;
+
+            Prop.ForAll(x).QuickCheckThrowOnFailure();
         }
 
-        public enum Money
+        public class Money
         {
-            Pound
+            public Money(int value)
+            {
+            }
         }
+
+        public class Receipt
+        {
+        }
+
 
         public class Account
         {
-            public object Deposit(object money)
+            public Receipt Deposit(Money money)
             {
-                return new object();
+                return new Receipt();
             }
         }
     }
