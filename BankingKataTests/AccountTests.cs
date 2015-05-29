@@ -50,9 +50,14 @@ namespace BankingKataTests
                 m_Value = value;
             }
 
-            public static Money Join(Money a, Money b)
+            public static Money Add(Money a, Money b)
             {
                 return new Money(a.m_Value + b.m_Value);
+            }
+
+            public static Money Subtract(Money a, Money b)
+            {
+                return new Money(a.m_Value - b.m_Value);
             }
 
             protected bool Equals(Money other)
@@ -114,7 +119,7 @@ namespace BankingKataTests
 
                 public override Money Value
                 {
-                    get { return m_Money; }
+                    get { return (Money.Subtract(Money.Zero, m_Money)); }
                 }
             }
         }
@@ -142,7 +147,7 @@ namespace BankingKataTests
 
             public Money Balance()
             {
-                return m_TransactionLog.Select(x => x.Value).Aggregate(Money.Join);
+                return m_TransactionLog.Select(x => x.Value).Aggregate(Money.Add);
             }
         }
     }
